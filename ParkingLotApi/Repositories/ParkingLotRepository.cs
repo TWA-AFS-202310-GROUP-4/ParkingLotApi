@@ -52,9 +52,10 @@ namespace ParkingLotApi.Repositories
             return items.ToList();
         }
 
-        public async Task DeleteByIdAsync(string id)
+        public async Task<long> DeleteByIdAsync(string id)
         {
-            await collection.DeleteOneAsync(item => item.Id == id);
+            var result = await collection.DeleteOneAsync(item => item.Id == id);
+            return result.DeletedCount;
         }
 
         public async Task<ParkingLotDto> UpdateByIdAsync(ParkingLotDto parkingLotDto)

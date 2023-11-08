@@ -26,6 +26,16 @@ namespace ParkingLotApi.Services
             return await _parkingLotRepository.GetAllAsync();
         }
 
+        public async Task<List<ParkingLotDto>> GetByPageIndexAsync(int pageIndex ,int pageSize = 15)
+        {
+            if (pageIndex < 1)
+            {
+                throw new InvalidCapacityException();
+            }
+            var res = await GetAllAsync();
+            return res.Skip((pageIndex-1) * pageSize).Take(pageSize).ToList();
+        }
+
         public async Task DeleteByIdAsync(string id)
         {
             await _parkingLotRepository.DeleteByIdAsync(id);

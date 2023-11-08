@@ -26,9 +26,9 @@ namespace ParkingLotApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ParkingLotDto>>> GetAll()
+        public async Task<ActionResult<List<ParkingLotDto>>> GetByPageIndex([FromQuery] int pageIndex)
         {
-            var lots = await this.parkingLotService.GetAllAsync();
+            var lots = await this.parkingLotService.GetByPageIndexAsync(pageIndex);
 
             return StatusCode(StatusCodes.Status200OK, lots);
         }
