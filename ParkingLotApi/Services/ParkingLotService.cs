@@ -74,7 +74,7 @@ namespace ParkingLotApi.Services
             var lot  = await _parkingLotRepository.GetByIdAsync(id);
             if (lot == null)
             {
-                throw new InvalidParkingLotNameOrIdException();
+                throw new IdNotExistException();
             }
             return lot;
         }
