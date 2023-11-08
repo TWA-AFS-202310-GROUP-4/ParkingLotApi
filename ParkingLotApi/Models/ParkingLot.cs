@@ -5,7 +5,7 @@ namespace ParkingLotApi.Models
 {
     public class ParkingLot
     {
-        ParkingLot() { }
+        public ParkingLot() { }
 
         public ParkingLot(string name, int capacity, string location)
         {

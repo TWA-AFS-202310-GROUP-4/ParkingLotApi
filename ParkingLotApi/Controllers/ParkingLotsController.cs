@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParkingLotApi.Models;
 using ParkingLotApi.Request;
+using ParkingLotApi.Requests;
 using ParkingLotApi.Services;
 
 namespace ParkingLotApi.Controllers
@@ -47,5 +48,10 @@ namespace ParkingLotApi.Controllers
             return NoContent();
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ParkingLot>> UpdateExistParkingLotAsync(string id, [FromBody] ParkingLotUpdateRequest parkingLotUpdateRequest)
+        {
+            return Ok(await parkingLotsService.UpdateParkingLotByIdAsync(id, parkingLotUpdateRequest));
+        }
     }
 }

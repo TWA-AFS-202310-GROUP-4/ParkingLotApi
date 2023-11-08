@@ -1,6 +1,7 @@
 ﻿using ParkingLotApi.Models;
 using ParkingLotApi.Repository;
 using ParkingLotApi.Request;
+using ParkingLotApi.Requests;
 
 namespace ParkingLotApi.Services
 {
@@ -33,6 +34,15 @@ namespace ParkingLotApi.Services
         public async Task<ParkingLot> GetParkingLotByIdAsync(string id)
         {
             return await parkingLotRepository.GetParkingLotAsync(id);
+        }
+
+        public async Task<ParkingLot> UpdateParkingLotByIdAsync(string id,ParkingLotUpdateRequest parkingLotUpdateRequest)
+        {
+            if(parkingLotUpdateRequest.Capacity < 10)
+            {
+                throw new InvalidCapacityException();
+            }
+            return await parkingLotRepository.UpdateParkingLotInfoByIdAsync(id,parkingLotUpdateRequest);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using ParkingLotApi.Models;
-using ParkingLotApi.Request;
+using ParkingLotApi.Requests;
 
 namespace ParkingLotApi.Repository
 {
@@ -42,6 +42,20 @@ namespace ParkingLotApi.Repository
         {
             var res = await _parkingLotCollection.Find(parkingLot => parkingLot.Id == id).FirstOrDefaultAsync();
             return res == null ? throw new InvalidIdException() : res;
+        }
+
+        public async Task<ParkingLot> UpdateParkingLotInfoByIdAsync(string id, ParkingLotUpdateRequest parkingLotUpdateRequest)
+        {
+            var originParkingLot = await GetParkingLotAsync(id);
+            var updatedLot = new ParkingLot()
+            {
+                Id = id,
+                Name = originParkingLot.Name,
+                Capacity = parkingLotUpdateRequest.Capacity,
+                Location = originParkingLot.Location,
+            };
+            await _parkingLotCollection.ReplaceOneAsync(parkinglot=>parkinglot.Id==id, updatedLot);
+            return updatedLot;
         }
     }
 }
