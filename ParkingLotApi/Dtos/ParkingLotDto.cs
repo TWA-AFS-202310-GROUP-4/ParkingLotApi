@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using ParkingLotApi.Models;
 
 namespace ParkingLotApi.Dtos
 {
@@ -8,5 +9,10 @@ namespace ParkingLotApi.Dtos
         public string Location { get; set; }
         
         public int Capacity { get; set; }
+
+        public ParkingLot ToModel()
+        {
+            return new ParkingLot { Name = Name, Location = Location, Capacity = Capacity };
+        }
     }
 }
