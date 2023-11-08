@@ -11,4 +11,6 @@ public interface IParkingLotsRepository
     public Task<List<ParkingLot>> GetParkingLots(int pageNumber);
 
     public Task<ParkingLot> GetParkingLotById(string id);
+
+    public Task<ParkingLot> UpdateCapacity(string id, int capacity);
 }

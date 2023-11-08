@@ -38,4 +38,9 @@ public class ParkingLotsService
     {
         return await _parkingLotsRepository.GetParkingLotById(id);
     }
+
+    public async Task<ParkingLot> UpdateCapacity(string id, int capacity)
+    {
+        return await _parkingLotsRepository.UpdateCapacity(id, capacity);
+    }
 }

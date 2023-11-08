@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParkingLotApi.Dtos;
 using ParkingLotApi.Services;
-using ParkingLotApi.Exceptions;
 using ParkingLotApi.Models;
 
 namespace ParkingLotApi.Controllers;
@@ -40,5 +39,11 @@ public class ParkingLotsController : ControllerBase
     public async Task<ActionResult<ParkingLot>> GetAParkingLot(string id)
     {
         return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.GetParkingLotById(id));
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult> UpdateCapacity(string id, ParkingLotsDto parkingLotsDto)
+    {
+        return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.UpdateCapacity(id, parkingLotsDto.Capacity));
     }
 }

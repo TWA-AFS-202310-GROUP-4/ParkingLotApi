@@ -53,4 +53,18 @@ public class ParkingLotsRepository : IParkingLotsRepository
 
         return targetLot;
     }
+
+    public async Task<ParkingLot> UpdateCapacity(string id, int capacity)
+    {
+        var filter = Builders<ParkingLot>.Filter.Where(lot => lot.Id.Equals(id));
+        var update = Builders<ParkingLot>.Update.Set(lot => lot.Capacity, capacity);
+        var result = await _parkingLotColelction.UpdateOneAsync(filter, update);
+
+        if (result.ModifiedCount != 1)
+        {
+            throw new ParkingLotNotFoundException();
+        }
+
+        return _parkingLotColelction.Find(lot => lot.Id.Equals(id)).FirstOrDefault();
+    }
 }
