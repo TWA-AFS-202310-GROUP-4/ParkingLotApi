@@ -13,23 +13,48 @@ namespace ParkingLotApi.Controllers
 
         public ParkingLotsController(ParkingLotService parkingLotService)
         {
-            this.parkingLotService = parkingLotService;   
+            this.parkingLotService = parkingLotService;
         }
 
         [HttpPost]
         public async Task<ActionResult<ParkingLotDto>> CreateParkingLotAsync([FromBody] ParkingLotDtoRequest parkingLotDtoRequest)
         {
             ParkingLotDto lot;
-            try
-            {
-                lot = await parkingLotService.CreateParkingLostAsync(parkingLotDtoRequest);
-            }
-            catch(InvalidCapacityException)
-            {
-                return BadRequest();
-            }
+            lot = await parkingLotService.CreateParkingLostAsync(parkingLotDtoRequest);
 
-            return Created("", lot);
+            return StatusCode(StatusCodes.Status201Created, lot);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<ParkingLotDto>>> GetAll()
+        {
+            var lots = await this.parkingLotService.GetAllAsync();
+
+            return StatusCode(StatusCodes.Status200OK, lots);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ParkingLotDto>> GetByIdAsync(string id)
+        {
+            var lot = await this.parkingLotService.GetByIdAsync(id);
+
+            return StatusCode(StatusCodes.Status200OK, lot);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteById(string id)
+        {
+            await this.parkingLotService.DeleteByIdAsync(id);
+
+            return StatusCode(StatusCodes.Status204NoContent);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<ParkingLotDto>> UpdateById(ParkingLotDto parkingLotDto)
+        {
+            var lot = await this.parkingLotService.UpdateByIdAsync(parkingLotDto);
+
+            return StatusCode(StatusCodes.Status200OK, lot);
         }
     }
 }

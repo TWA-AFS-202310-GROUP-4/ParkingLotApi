@@ -46,6 +46,7 @@ Content-Type: application/json; charset=utf-8
 ## Response 
 ### 1. Return parkinglot ( 200 )
 ### 2. id not exist, return null (NO CONTENT)
+### 3. capacity and name are ilegal (Bad Request)
 
 ## 5. delete parkinglot by id
 DELETE http://{{hostname}}:{{port}}/parkinglots/{id}

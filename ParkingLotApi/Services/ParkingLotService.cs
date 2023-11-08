@@ -1,18 +1,81 @@
-﻿using ParkingLotApi.DTOs;
+﻿using Microsoft.Extensions.Options;
+using ParkingLotApi.DTOs;
 using ParkingLotApi.Exceptions;
+using ParkingLotApi.Interfaces;
 
 namespace ParkingLotApi.Services
 {
     public class ParkingLotService
     {
+        private IParkingLotRepository _parkingLotRepository;
+        public ParkingLotService( IParkingLotRepository parkingLotRepository)
+        {
+            this._parkingLotRepository = parkingLotRepository;
+        }
+
         public async Task<ParkingLotDto> CreateParkingLostAsync(ParkingLotDtoRequest parkingLotDtoRequest)
         {
-            if (parkingLotDtoRequest.Capacity < 10)
+            await ValidateCapacityAndName(parkingLotDtoRequest.Capacity, parkingLotDtoRequest.Name);
+
+            var parkingLot = new ParkingLotDto(parkingLotDtoRequest);
+            return await _parkingLotRepository.AddOneAsync(parkingLot);
+        }
+
+        public async Task<List<ParkingLotDto>> GetAllAsync()
+        {
+            return await _parkingLotRepository.GetAllAsync();
+        }
+
+        public async Task DeleteByIdAsync(string id)
+        {
+            await _parkingLotRepository.DeleteByIdAsync(id);
+        }
+
+        public async Task<ParkingLotDto> UpdateByIdAsync(ParkingLotDto parkingLotDto)
+        {
+            await ValidateCapacityAndName(parkingLotDto.Capacity, parkingLotDto.Name);
+            var lot = await _parkingLotRepository.UpdateByIdAsync(parkingLotDto);
+            if (lot == null)
+            {
+                throw new InvalidParkingLotNameOrIdException();
+            }
+
+            return lot;
+        }
+
+        public async Task<ParkingLotDto> GetByNameAsync(string name)
+        {
+            var lot = await _parkingLotRepository.GetByNameAsync(name);
+            if (lot == null)
+            {
+                throw new InvalidParkingLotNameOrIdException();
+            }
+
+            return lot;
+        }
+
+        public async Task<ParkingLotDto> GetByIdAsync(string id)
+        {
+            var lot  = await _parkingLotRepository.GetByIdAsync(id);
+            if (lot == null)
+            {
+                throw new InvalidParkingLotNameOrIdException();
+            }
+            return lot;
+        }
+
+        private async Task ValidateCapacityAndName(int capacity, string name)
+        {
+            if (capacity < 10)
             {
                 throw new InvalidCapacityException();
             }
 
-            return null;
+            var existedParkingLot = await _parkingLotRepository.GetByNameAsync(name);
+            if (existedParkingLot != null)
+            {
+                throw new RepeatParkingLotNameOrIdException();
+            }
         }
     }
 }
