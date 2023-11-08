@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParkingLotApi.DTOs;
+using ParkingLotApi.Exceptions;
+using ParkingLotApi.Services;
 
 namespace ParkingLotApi.Controllers
 {
@@ -7,15 +9,27 @@ namespace ParkingLotApi.Controllers
     [Route("[controller]")]
     public class ParkingLotsController : ControllerBase
     {
-        [HttpPost]
-        public async Task<ActionResult<ParkingLotDto>> CreateParkingLot([FromBody] ParkingLotDtoRequest parkingLotDtoRequest)
+        private readonly ParkingLotService parkingLotService;
+
+        public ParkingLotsController(ParkingLotService parkingLotService)
         {
-            if (parkingLotDtoRequest.Capacity < 10)
+            this.parkingLotService = parkingLotService;   
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ParkingLotDto>> CreateParkingLotAsync([FromBody] ParkingLotDtoRequest parkingLotDtoRequest)
+        {
+            ParkingLotDto lot;
+            try
+            {
+                lot = await parkingLotService.CreateParkingLostAsync(parkingLotDtoRequest);
+            }
+            catch(InvalidCapacityException)
             {
                 return BadRequest();
             }
 
-            return Ok();
+            return Created("", lot);
         }
     }
 }

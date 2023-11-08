@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
+using ParkingLotApi.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +19,13 @@ namespace ParkingLotApiTest.Controllers
         [Fact]
         public async void Should_return_400_When_post_parkinglots_given_capacity_less_10()
         {
+            var client = GetClient();
             var parkingLot = new ParkingLotDtoRequest()
             {
                 Name = "test",
                 Capacity = 9,
                 Location = "test loc",
             };
-            var client = GetClient();
 
             var response = await client.PostAsJsonAsync("/parkinglots", parkingLot);
 

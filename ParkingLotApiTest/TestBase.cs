@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
+using ParkingLotApi.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,19 +28,7 @@ namespace ParkingLotApiTest
             //    builder.ConfigureServices(
             //        services =>
             //        {
-            //            services.AddSingleton<ArticleStore>(provider =>
-            //            {
-            //                return articleStore;
-            //            });
-            //            services.AddSingleton<UserStore>(provider =>
-            //            {
-            //                return userStore;
-            //            });
-            //            services.AddScoped<ArticleService>();
-            //            services.AddScoped<IArticleRepository>(provider =>
-            //            {
-            //                return articleRepository;
-            //            });
+            //            services.AddScoped<ParkingLotService>();
             //        });
             //}).CreateDefaultClient();
         }
