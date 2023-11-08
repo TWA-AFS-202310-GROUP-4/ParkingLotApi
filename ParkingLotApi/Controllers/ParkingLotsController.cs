@@ -31,7 +31,7 @@ namespace ParkingLotApi.Controllers
         {
 
             var res = await parkingLotsService.GetParkingLotByIdAsync(id);
-            return res==null?NotFound():Ok(res);
+            return Ok(res);
         }
 
         [HttpPost]
@@ -43,8 +43,8 @@ namespace ParkingLotApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteExistedParkingLotAsync(string id)
         {
-            var res = await parkingLotsService.DeleteParkingLotByIdAsync(id);
-            return res ? NoContent() : NotFound();
+            await parkingLotsService.DeleteParkingLotByIdAsync(id);
+            return NoContent();
         }
 
     }

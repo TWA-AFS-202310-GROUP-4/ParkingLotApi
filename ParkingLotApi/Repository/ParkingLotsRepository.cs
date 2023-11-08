@@ -26,7 +26,11 @@ namespace ParkingLotApi.Repository
         public async Task<bool> DeleteParkingLotAsync(string id)
         {
             var res = await _parkingLotCollection.DeleteOneAsync(parkingLot => parkingLot.Id == id);
-            return res.DeletedCount == 0 ? false:true ;
+            if (res.DeletedCount == 0)
+            {
+                throw new InvalidIdException();
+            }
+            return true;
         }
 
         public async Task<List<ParkingLot>> GetParkingLotByPageIndexAsync(int? pageIndex)
@@ -34,10 +38,10 @@ namespace ParkingLotApi.Repository
             return await _parkingLotCollection.Find(Builders<ParkingLot>.Filter.Empty).Skip((pageIndex - 1) * _pageSize).Limit(_pageSize).ToListAsync();
         }
 
-        public async Task<ParkingLot?> GetParkingLotAsync(string id)
+        public async Task<ParkingLot> GetParkingLotAsync(string id)
         {
             var res = await _parkingLotCollection.Find(parkingLot => parkingLot.Id == id).FirstOrDefaultAsync();
-            return res == null ? null : res;
+            return res == null ? throw new InvalidIdException() : res;
         }
     }
 }
