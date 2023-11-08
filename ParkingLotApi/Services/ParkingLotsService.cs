@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParkingLotApi.Dtos;
+using ParkingLotApi.Exception;
 using ParkingLotApi.Models;
 
 namespace ParkingLotApi.Services
@@ -8,7 +9,7 @@ namespace ParkingLotApi.Services
     {
         public async Task<ParkingLotDto> CreateAsync( ParkingLotDto parkingLotDto)
         {
-            if (parkingLotDto.Capacity < 10) throw new ArgumentException();
+            if (parkingLotDto.Capacity < 10) throw new InvaildCapacityException();
             return null;
         }
     }
