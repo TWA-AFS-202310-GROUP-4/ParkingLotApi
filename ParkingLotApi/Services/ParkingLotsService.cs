@@ -26,11 +26,16 @@ public class ParkingLotsService
 
     public async Task DeleteAParkingLot(string id)
     {
-        await _parkingLotsRepository.DeleteParkingLot(id);
+        await _parkingLotsRepository.DeleteAParkingLot(id);
     }
 
-    public async Task<List<ParkingLot>> ShowParkingLots(int pageNumber)
+    public async Task<List<ParkingLot>> GetParkingLots(int pageNumber)
     {
         return await _parkingLotsRepository.GetParkingLots(pageNumber);
+    }
+
+    public async Task<ParkingLot> GetParkingLotById(string id)
+    {
+        return await _parkingLotsRepository.GetParkingLotById(id);
     }
 }

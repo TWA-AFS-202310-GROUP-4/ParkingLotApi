@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using ParkingLotApi.Models;
 using ParkingLotApi.Exceptions;
+using System.Security.Claims;
 
 namespace ParkingLotApi.Repositories;
 
@@ -23,7 +24,7 @@ public class ParkingLotsRepository : IParkingLotsRepository
         return  _parkingLotColelction.Find(lot => lot.Name.Equals(parkingLot.Name)).FirstOrDefault();
     }
 
-    public async Task DeleteParkingLot(string id)
+    public async Task DeleteAParkingLot(string id)
     {
         var result = await _parkingLotColelction.DeleteOneAsync(lot => lot.Id.Equals(id));
 
@@ -36,5 +37,20 @@ public class ParkingLotsRepository : IParkingLotsRepository
     public async Task<List<ParkingLot>> GetParkingLots(int pageNumber)
     {
         return await _parkingLotColelction.Find(_ => true).Skip((pageNumber - 1) * PageSize).Limit(PageSize).ToListAsync();
+    }
+
+    public async Task<ParkingLot> GetParkingLotById(string id)
+    {
+
+        var filter = Builders<ParkingLot>.Filter.Where(lot => lot.Id.Equals(id));
+        var result = await _parkingLotColelction.FindAsync(filter);
+        var targetLot = result.FirstOrDefault();
+
+        if (targetLot == null) 
+        {
+            throw new ParkingLotNotFoundException();
+        }
+
+        return targetLot;
     }
 }

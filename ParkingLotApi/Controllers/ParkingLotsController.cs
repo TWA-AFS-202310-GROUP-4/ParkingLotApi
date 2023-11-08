@@ -2,6 +2,7 @@
 using ParkingLotApi.Dtos;
 using ParkingLotApi.Services;
 using ParkingLotApi.Exceptions;
+using ParkingLotApi.Models;
 
 namespace ParkingLotApi.Controllers;
 
@@ -32,6 +33,12 @@ public class ParkingLotsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<ParkingLotsDto>> ShowParkingLotsWithPagination([FromQuery] int pageIndex)
     {
-        return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.ShowParkingLots(pageIndex));
+        return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.GetParkingLots(pageIndex));
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ParkingLot>> GetAParkingLot(string id)
+    {
+        return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.GetParkingLotById(id));
     }
 }
