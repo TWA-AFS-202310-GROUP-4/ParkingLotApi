@@ -17,7 +17,7 @@ public class ParkingLotsControllerTest : TestBase
     {
         //Given
         HttpClient _httpClient = GetClient();
-        ParkingLotsRequestDto parkingLotCapacityLess10 = new ParkingLotsRequestDto() {Name = "Test Street", Location = "My Street", Capacity  = 8};
+        ParkingLotsDto parkingLotCapacityLess10 = new ParkingLotsDto() {Name = "Test Street", Location = "My Street", Capacity  = 8};
 
         //When
         HttpResponseMessage response = await _httpClient.PostAsJsonAsync("/parkinglots", parkingLotCapacityLess10);

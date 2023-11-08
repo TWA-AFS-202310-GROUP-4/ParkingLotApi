@@ -7,7 +7,7 @@ namespace ParkingLotApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ParkingLotsController : ControllerBase 
+public class ParkingLotsController : ControllerBase
 {
     private readonly ParkingLotsService _parkingLotsService;
 
@@ -17,17 +17,8 @@ public class ParkingLotsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<ParkingLotsRequestDto>> AddNewParkingLotAsync([FromBody] ParkingLotsRequestDto parkingLotDto)
+    public async Task<ActionResult<ParkingLotsDto>> AddNewParkingLotAsync([FromBody] ParkingLotsDto parkingLotDto)
     {
-        //try
-        //{
-        //    return StatusCode(StatusCodes.Status201Created, await _parkingLotsService.AddParkingLotAsync(parkingLotDto));
-        //}
-        //catch (InvalidCapacityException ex)
-        //{
-        //    return BadRequest();
-        //}
-
         return StatusCode(StatusCodes.Status201Created, await _parkingLotsService.AddParkingLotAsync(parkingLotDto));
     }
 }
