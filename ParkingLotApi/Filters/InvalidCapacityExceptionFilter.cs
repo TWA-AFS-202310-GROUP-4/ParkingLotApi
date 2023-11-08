@@ -15,6 +15,11 @@ public class InvalidCapacityExceptionFilter : IActionFilter, IOrderedFilter
             context.Result = new BadRequestResult();
             context.ExceptionHandled = true;
         }
+        else if (context.Exception is ParkingLotNotFoundException)
+        {
+            context.Result = new NotFoundResult();
+            context.ExceptionHandled = true;
+        }
     }
 
     public void OnActionExecuting(ActionExecutingContext context)

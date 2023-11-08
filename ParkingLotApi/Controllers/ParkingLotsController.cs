@@ -21,4 +21,11 @@ public class ParkingLotsController : ControllerBase
     {
         return StatusCode(StatusCodes.Status201Created, await _parkingLotsService.AddParkingLotAsync(parkingLotDto));
     }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult>  DeleteAParkingLot(string id)
+    {
+       await _parkingLotsService.DeleteAParkingLot(id);
+       return NoContent();
+    }
 }

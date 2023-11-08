@@ -23,4 +23,9 @@ public class ParkingLotsService
 
         return await _parkingLotsRepository.CreateParkingLot(parkingLotDto.ToEntity());
     }
+
+    public async Task DeleteAParkingLot(string id)
+    {
+        await _parkingLotsRepository.DeleteParkingLot(id);
+    }
 }
