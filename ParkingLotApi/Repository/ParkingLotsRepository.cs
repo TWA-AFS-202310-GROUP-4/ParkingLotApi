@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using ParkingLotApi.Services.Exceptions;
 using ParkingLotApi.Models;
 using ParkingLotApi.Requests;
 

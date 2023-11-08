@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace ParkingLotApi.Services
+namespace ParkingLotApi.Services.Exceptions
 {
     [Serializable]
     public class InvalidCapacityException : Exception

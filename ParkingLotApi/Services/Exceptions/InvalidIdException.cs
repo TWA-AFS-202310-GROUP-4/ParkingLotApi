@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace ParkingLotApi.Repository
+namespace ParkingLotApi.Services.Exceptions
 {
     [Serializable]
     internal class InvalidIdException : Exception

@@ -2,6 +2,7 @@
 using ParkingLotApi.Repository;
 using ParkingLotApi.Request;
 using ParkingLotApi.Requests;
+using ParkingLotApi.Services.Exceptions;
 
 namespace ParkingLotApi.Services
 {

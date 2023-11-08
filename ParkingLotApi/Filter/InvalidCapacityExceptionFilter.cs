@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using ParkingLotApi.Services;
+using ParkingLotApi.Services.Exceptions;
 
 namespace ParkingLotApi.Filter
 {
