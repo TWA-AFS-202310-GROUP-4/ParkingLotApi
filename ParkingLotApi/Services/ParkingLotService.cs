@@ -41,7 +41,7 @@ namespace ParkingLotApi.Services
 
         public async Task<ParkingLot> UpdateByIdAsync(string id, ParkingLotDto parkingLotDto)
         {
-            if (parkingLotDto.Capacity < 10) throw new InvalidCapacityException();
+            if (parkingLotDto.Capacity != 0 && parkingLotDto.Capacity < 10) throw new InvalidCapacityException();
             return await _parkingLotRepository.UpdateParkingLot(id, parkingLotDto.ToEntity());
         }
     }

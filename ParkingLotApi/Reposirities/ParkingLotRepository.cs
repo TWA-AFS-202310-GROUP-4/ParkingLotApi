@@ -36,8 +36,8 @@ namespace ParkingLotApi.Reposirities
         public async Task<ParkingLot> UpdateParkingLot(string id, ParkingLot parkingLot)
         {
             var candidate = await _parkingLotCollection.Find(a => a.Id == id).FirstOrDefaultAsync();
-            if (parkingLot.Name != null)  candidate.Name = parkingLot.Name;
-            candidate.Capacity = parkingLot.Capacity;
+            if (parkingLot.Name != null) candidate.Name = parkingLot.Name;
+            if (parkingLot.Capacity != 0) candidate.Capacity = parkingLot.Capacity;
             if (parkingLot.Location != null) candidate.Location = parkingLot.Location;
             await _parkingLotCollection.ReplaceOneAsync(a => a.Id == id, candidate);
             return candidate;
