@@ -9,20 +9,18 @@ using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace ParkingLotApiTest.Controller;
 
-public class WeatherForecastControllerTest
+public class WeatherForecastControllerTest :TestBase
 {
-
-    private HttpClient _httpClient;
-
-    public WeatherForecastControllerTest()
+    public WeatherForecastControllerTest(WebApplicationFactory<Program> factory) : base(factory)
     {
-        WebApplicationFactory<Program> webApplicationFactory = new WebApplicationFactory<Program>();
-        _httpClient = webApplicationFactory.CreateClient();
+    
     }
 
     [Fact]
     public async Task Should_return_correctly_when_get_weather_forcast()
     {
+
+        HttpClient _httpClient = GetClient();
         //given & when
         HttpResponseMessage response = await _httpClient.GetAsync("/WeatherForecast");
 
