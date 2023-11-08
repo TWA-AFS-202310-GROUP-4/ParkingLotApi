@@ -37,5 +37,18 @@ namespace ParkingLotApi.Services
       
             await _parkingLotRepository.DeleteById(id);
         }
+
+        public async Task<ParkingLot> GetByIdAsync(string id)
+        {
+            var parkingLot = await _parkingLotRepository.GetById(id);
+            if (parkingLot == null) throw new IdNotExistException();
+            return parkingLot;
+        }
+
+        public async Task<List<ParkingLot>> GetAllAsync(int? pageIndex,int? pageSize)
+        {
+            return await _parkingLotRepository.GetAll(pageIndex, pageSize);
+
+        }
     }
 }

@@ -34,6 +34,14 @@ namespace ParkingLotApi.Repositories
             await _parkingLotCollection.DeleteOneAsync(a => a.Id == id);
         }
 
+        public async Task<List<ParkingLot>> GetAll(int? pageIndex, int? pageSize)
+        {
+            var skip = (pageIndex - 1) * pageSize;
+            var query = _parkingLotCollection.Find(a => true);
+            var parkinglots = await query.Skip(skip).Limit(pageSize).ToListAsync();
+            return parkinglots;
+        }
+
         public async Task<ParkingLot> GetById(string id)
         {
              return await _parkingLotCollection.Find(a => a.Id == id).FirstOrDefaultAsync();
