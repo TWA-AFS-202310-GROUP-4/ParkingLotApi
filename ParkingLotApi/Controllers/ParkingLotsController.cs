@@ -24,8 +24,8 @@ namespace ParkingLotApi.Controllers
 
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> DeleteParkingLotAsync([FromBody] string id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteParkingLotAsync(string id)
         {
             bool isSuccess = _parkingLotSaervice.DeleteAsync(id).Result;
             if (isSuccess)
