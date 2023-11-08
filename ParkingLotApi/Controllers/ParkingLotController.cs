@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParkingLotApi.Dtos;
 using ParkingLotApi.Exceptions;
+using ParkingLotApi.Models;
 using ParkingLotApi.Services;
 
 namespace ParkingLotApi.Controllers
@@ -18,16 +19,15 @@ namespace ParkingLotApi.Controllers
         [HttpPost]
         public async Task<ActionResult<ParkingLotDto>> AddParkingLotAsync([FromBody] ParkingLotDto data)
         {
-            try
-            {
-                var ret = await _service.AddAsync(data);
-                return StatusCode(StatusCodes.Status201Created, ret);
-            }
-            catch (InvalidCapacityException ex)
-            {
-                return BadRequest();
-            }
-            
+            return StatusCode(StatusCodes.Status201Created, await _service.AddAsync(data));
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteParkingLotAsync(string id)
+        {
+            await _service.DeleteAsync(id);
+            return NoContent();
         }
     }
 }

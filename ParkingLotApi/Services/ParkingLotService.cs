@@ -1,19 +1,29 @@
 ﻿using ParkingLotApi.Dtos;
 using ParkingLotApi.Exceptions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using ParkingLotApi.Models;
+using ParkingLotApi.Reposirities;
 
 namespace ParkingLotApi.Services
 {
     public class ParkingLotService
     {
-        public async Task<ParkingLotDto> AddAsync(ParkingLotDto data)
+        private readonly IParkingLotRepository _parkingLotRepository;
+
+        public ParkingLotService(IParkingLotRepository parkingLotRepository)
+        {
+            this._parkingLotRepository = parkingLotRepository;
+        }
+
+        public async Task<ParkingLot> AddAsync(ParkingLotDto data)
         {
             if (data.Capacity < 10)
             {
                 throw new InvalidCapacityException();
             }
 
-            return null;
+            return await _parkingLotRepository.CreateParkingLot(data.ToEntity());
         }
+
+        public async Task DeleteAsync(string id) => await _parkingLotRepository.DeleteParkingLot(id);
     }
 }
