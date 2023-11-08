@@ -9,7 +9,7 @@ namespace ParkingLotApi.Services
         {
             if (parkingLotRequest.Capacity < 10)
             {
-                throw new ArgumentException();
+                throw new InvalidCapacityExcpetion();
             }
             return new ParkingLotDTO(parkingLotRequest.Name, (int)parkingLotRequest.Capacity, parkingLotRequest.Location);
         }
