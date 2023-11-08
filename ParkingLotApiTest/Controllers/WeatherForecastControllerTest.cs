@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace ParkingLotApiTest.Controllers
 {
-    public class WeatherForecastControllerTest:TestBase
+    public class WeatherForecastControllerTest : TestBase
     {
-        public WeatherForecastControllerTest(WebApplicationFactory<Program> webApplicationFactory):base(webApplicationFactory)
+        public WeatherForecastControllerTest(WebApplicationFactory<Program> webApplicationFactory) : base(webApplicationFactory)
         {
         }
 
@@ -14,7 +14,7 @@ namespace ParkingLotApiTest.Controllers
         {
             //given & when
             HttpClient _httpClient = GetClient();
-             HttpResponseMessage response= await _httpClient.GetAsync("/WeatherForecast");
+            HttpResponseMessage response = await _httpClient.GetAsync("/WeatherForecast");
 
             //then
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
