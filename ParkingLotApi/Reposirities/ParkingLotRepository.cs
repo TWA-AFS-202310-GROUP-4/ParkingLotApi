@@ -23,6 +23,8 @@ namespace ParkingLotApi.Reposirities
 
         public async Task DeleteParkingLot(string id) => await _parkingLotCollection.DeleteOneAsync(a => a.Id == id);
 
+        public async Task<ParkingLot> GetById(string id) => await _parkingLotCollection.Find(a => a.Id == id).FirstOrDefaultAsync();
+
         public async Task<List<ParkingLot>> GetPartial(int pageSize, int pageIndex)
         {
             var parkingLots = _parkingLotCollection.Find(_ => true).ToList();
