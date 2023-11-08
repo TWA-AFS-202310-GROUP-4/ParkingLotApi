@@ -15,6 +15,11 @@ builder.Services.AddControllers(options =>
     options.Filters.Add<InvalidCapacityExceptionFilter>();
 });
 
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<InvalidIdExceptionFilter>();
+});
+
 builder.Services.AddControllers().AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

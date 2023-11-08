@@ -34,7 +34,9 @@ namespace ParkingLotApi.Services
 
         public async Task<ParkingLot> GetByIdAsync(string id)
         {
-            return await _parkingLotRepository.GetParkingLotById(id);
+            var parkingLot = await _parkingLotRepository.GetParkingLotById(id);
+            if (parkingLot == null) throw new InvalidIdException();
+            return parkingLot;
         }
 
         public async Task<ParkingLot> UpdateByIdAsync(string id, ParkingLotDto parkingLotDto)
