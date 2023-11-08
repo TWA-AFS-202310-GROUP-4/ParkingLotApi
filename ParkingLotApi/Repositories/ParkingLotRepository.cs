@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using ParkingLotApi.Models;
+using System.Security.Cryptography;
 
 namespace ParkingLotApi.Repositories
 {
@@ -36,6 +38,14 @@ namespace ParkingLotApi.Repositories
 
         public async Task<ParkingLot> GetParkingLotById(string id)
         {
+            return await _parkingLotCollection.Find(parkingLot => parkingLot.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<ParkingLot> UpdateParkingLotById(string id, int capacity)
+        {
+            var update = Builders<ParkingLot>.Update.Set("Capacity", capacity);
+            await _parkingLotCollection.UpdateOneAsync(parkingLot => parkingLot.Id == id,
+                update);
             return await _parkingLotCollection.Find(parkingLot => parkingLot.Id == id).FirstOrDefaultAsync();
         }
     }

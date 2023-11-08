@@ -62,5 +62,17 @@ namespace ParkingLotApi.Controllers
 
             return StatusCode(StatusCodes.Status200OK, result);
 ;        }
+
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<ParkingLot>> UpdateParkingLotAsync(string id, [FromBody] ParkingLotWithCapacityDTO parkingLotWithCapacity)
+        {
+            var result =await _parkingLotSaervice.UpdateParkingLotById(id, parkingLotWithCapacity.Capacity);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return StatusCode(StatusCodes.Status200OK, result);
+        }
     }
 }
