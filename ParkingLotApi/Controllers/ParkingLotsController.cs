@@ -19,13 +19,15 @@ public class ParkingLotsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ParkingLotsRequestDto>> AddNewParkingLotAsync([FromBody] ParkingLotsRequestDto parkingLotDto)
     {
-        try
-        {
-            return StatusCode(StatusCodes.Status201Created, await _parkingLotsService.AddParkingLotAsync(parkingLotDto));
-        }
-        catch (InvalidCapacityException ex)
-        {
-            return BadRequest();
-        }
+        //try
+        //{
+        //    return StatusCode(StatusCodes.Status201Created, await _parkingLotsService.AddParkingLotAsync(parkingLotDto));
+        //}
+        //catch (InvalidCapacityException ex)
+        //{
+        //    return BadRequest();
+        //}
+
+        return StatusCode(StatusCodes.Status201Created, await _parkingLotsService.AddParkingLotAsync(parkingLotDto));
     }
 }
