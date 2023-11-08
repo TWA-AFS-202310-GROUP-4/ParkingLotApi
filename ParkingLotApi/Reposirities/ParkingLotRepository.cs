@@ -37,7 +37,7 @@ namespace ParkingLotApi.Reposirities
         {
             var candidate = await _parkingLotCollection.Find(a => a.Id == id).FirstOrDefaultAsync();
             if (parkingLot.Name != null)  candidate.Name = parkingLot.Name;
-            if (parkingLot.Capacity > 10) candidate.Capacity = parkingLot.Capacity;
+            candidate.Capacity = parkingLot.Capacity;
             if (parkingLot.Location != null) candidate.Location = parkingLot.Location;
             await _parkingLotCollection.ReplaceOneAsync(a => a.Id == id, candidate);
             return candidate;
