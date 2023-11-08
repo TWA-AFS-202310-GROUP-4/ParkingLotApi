@@ -46,6 +46,13 @@ namespace ParkingLotApi.Controllers
             await  _parkingLotsService.DeleteAsync(id);
             return NoContent();
         }
-        
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateAsync(string id, [FromBody] ParkingLotDto parkingLotDto)
+        {
+
+            await _parkingLotsService.UpdateAsync(id,parkingLotDto);
+            return NoContent();
+        }
     }
 }

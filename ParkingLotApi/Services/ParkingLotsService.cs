@@ -50,5 +50,10 @@ namespace ParkingLotApi.Services
             return await _parkingLotRepository.GetAll(pageIndex, pageSize);
 
         }
+
+        internal async Task<ParkingLot> UpdateAsync(string id, ParkingLotDto parkingLotDto)
+        {   
+            return await _parkingLotRepository.Update(id, parkingLotDto.ToModel());
+        }
     }
 }
