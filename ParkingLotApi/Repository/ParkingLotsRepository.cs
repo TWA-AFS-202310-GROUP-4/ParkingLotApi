@@ -16,7 +16,7 @@ namespace ParkingLotApi.Repository
             _parkingLotCollection = mangoDatabase.GetCollection<ParkingLot>(parkingLotDatabaseSettings.Value.CollectionName);
         }
 
-        public async Task<ParkingLot> AddParkingLot(ParkingLot parkingLotDTO)
+        public async Task<ParkingLot> AddParkingLotAsync(ParkingLot parkingLotDTO)
         {
 
             await _parkingLotCollection.InsertOneAsync(parkingLotDTO);

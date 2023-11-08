@@ -38,7 +38,7 @@ namespace ParkingLotApi.Controllers
         [HttpPost]
         public async Task<ActionResult<ParkingLot>> CreateNewParkingLotAsync([FromBody] ParkingLotRequest parkingLotRequest)
         {
-            return Created("", await parkingLotsService.AddParkingLotAsyn(parkingLotRequest));
+            return Created("", await parkingLotsService.AddParkingLotAsync(parkingLotRequest));
         }
 
         [HttpDelete("{id}")]
