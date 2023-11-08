@@ -23,7 +23,7 @@ namespace ParkingLotApiTest.Controllers
                 Capacity = 1,
                 Location = "S",
             };
-            
+
             //when
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("/parkinglots", parkinglotDtoWithCapacity1);
 
