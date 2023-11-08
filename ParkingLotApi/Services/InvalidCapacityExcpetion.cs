@@ -3,21 +3,21 @@
 namespace ParkingLotApi.Services
 {
     [Serializable]
-    internal class InvalidCapacityExcpetion : Exception
+    public class InvalidCapacityException : Exception
     {
-        public InvalidCapacityExcpetion()
+        public InvalidCapacityException()
         {
         }
 
-        public InvalidCapacityExcpetion(string? message) : base(message)
+        public InvalidCapacityException(string? message) : base(message)
         {
         }
 
-        public InvalidCapacityExcpetion(string? message, Exception? innerException) : base(message, innerException)
+        public InvalidCapacityException(string? message, Exception? innerException) : base(message, innerException)
         {
         }
 
-        protected InvalidCapacityExcpetion(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected InvalidCapacityException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }
