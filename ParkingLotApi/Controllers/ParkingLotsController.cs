@@ -19,31 +19,31 @@ public class ParkingLotsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ParkingLotsDto>> AddNewParkingLotAsync([FromBody] ParkingLotsDto parkingLotDto)
     {
-        return StatusCode(StatusCodes.Status201Created, await _parkingLotsService.AddParkingLotAsync(parkingLotDto));
+        return StatusCode(StatusCodes.Status201Created, await _parkingLotsService.AddParkingLotAsyncAsync(parkingLotDto));
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult>  DeleteAParkingLot(string id)
+    public async Task<ActionResult>  DeleteAParkingLotAsync(string id)
     {
-       await _parkingLotsService.DeleteAParkingLot(id);
+       await _parkingLotsService.DeleteAParkingLotAsync(id);
        return NoContent();
     }
 
     [HttpGet]
-    public async Task<ActionResult<ParkingLotsDto>> ShowParkingLotsWithPagination([FromQuery] int pageIndex)
+    public async Task<ActionResult<ParkingLotsDto>> ShowParkingLotsWithPaginationAsync([FromQuery] int pageIndex)
     {
-        return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.GetParkingLots(pageIndex));
+        return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.GetParkingLotsAsync(pageIndex));
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ParkingLot>> GetAParkingLot(string id)
+    public async Task<ActionResult<ParkingLot>> GetAParkingLotAsync(string id)
     {
-        return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.GetParkingLotById(id));
+        return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.GetParkingLotByIdAsync(id));
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> UpdateCapacity(string id, ParkingLotsDto parkingLotsDto)
+    public async Task<ActionResult> UpdateCapacityAsync(string id, ParkingLotsDto parkingLotsDto)
     {
-        return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.UpdateCapacity(id, parkingLotsDto.Capacity));
+        return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.UpdateCapacityAsync(id, parkingLotsDto.Capacity));
     }
 }

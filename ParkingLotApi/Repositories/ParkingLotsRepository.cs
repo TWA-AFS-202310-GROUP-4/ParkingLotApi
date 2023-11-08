@@ -18,13 +18,13 @@ public class ParkingLotsRepository : IParkingLotsRepository
         _parkingLotColelction = mongoDatabase.GetCollection<ParkingLot>(parkingLotDataBaseSetting.Value.CollectionName);
     }
 
-    public async Task<ParkingLot> CreateParkingLot(ParkingLot parkingLot)
+    public async Task<ParkingLot> CreateParkingLotAsync(ParkingLot parkingLot)
     {
         await _parkingLotColelction.InsertOneAsync(parkingLot);
         return  _parkingLotColelction.Find(lot => lot.Name.Equals(parkingLot.Name)).FirstOrDefault();
     }
 
-    public async Task DeleteAParkingLot(string id)
+    public async Task DeleteAParkingLotAsync(string id)
     {
         var result = await _parkingLotColelction.DeleteOneAsync(lot => lot.Id.Equals(id));
 
@@ -34,12 +34,12 @@ public class ParkingLotsRepository : IParkingLotsRepository
         }
     }
 
-    public async Task<List<ParkingLot>> GetParkingLots(int pageNumber)
+    public async Task<List<ParkingLot>> GetParkingLotsAsync(int pageNumber)
     {
         return await _parkingLotColelction.Find(_ => true).Skip((pageNumber - 1) * PageSize).Limit(PageSize).ToListAsync();
     }
 
-    public async Task<ParkingLot> GetParkingLotById(string id)
+    public async Task<ParkingLot> GetParkingLotByIdAsync(string id)
     {
 
         var filter = Builders<ParkingLot>.Filter.Where(lot => lot.Id.Equals(id));
@@ -54,7 +54,7 @@ public class ParkingLotsRepository : IParkingLotsRepository
         return targetLot;
     }
 
-    public async Task<ParkingLot> UpdateCapacity(string id, int capacity)
+    public async Task<ParkingLot> UpdateCapacityAsync(string id, int capacity)
     {
         var filter = Builders<ParkingLot>.Filter.Where(lot => lot.Id.Equals(id));
         var update = Builders<ParkingLot>.Update.Set(lot => lot.Capacity, capacity);

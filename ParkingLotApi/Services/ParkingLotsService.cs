@@ -14,33 +14,33 @@ public class ParkingLotsService
         this._parkingLotsRepository = parkingLotsRepository;
     }
 
-    public async Task<ParkingLot> AddParkingLotAsync(ParkingLotsDto parkingLotDto)
+    public async Task<ParkingLot> AddParkingLotAsyncAsync(ParkingLotsDto parkingLotDto)
     {
         if (parkingLotDto.Capacity < 10)
         {
             throw new InvalidCapacityException();
         }
 
-        return await _parkingLotsRepository.CreateParkingLot(parkingLotDto.ToEntity());
+        return await _parkingLotsRepository.CreateParkingLotAsync(parkingLotDto.ToEntity());
     }
 
-    public async Task DeleteAParkingLot(string id)
+    public async Task DeleteAParkingLotAsync(string id)
     {
-        await _parkingLotsRepository.DeleteAParkingLot(id);
+        await _parkingLotsRepository.DeleteAParkingLotAsync(id);
     }
 
-    public async Task<List<ParkingLot>> GetParkingLots(int pageNumber)
+    public async Task<List<ParkingLot>> GetParkingLotsAsync(int pageNumber)
     {
-        return await _parkingLotsRepository.GetParkingLots(pageNumber);
+        return await _parkingLotsRepository.GetParkingLotsAsync(pageNumber);
     }
 
-    public async Task<ParkingLot> GetParkingLotById(string id)
+    public async Task<ParkingLot> GetParkingLotByIdAsync(string id)
     {
-        return await _parkingLotsRepository.GetParkingLotById(id);
+        return await _parkingLotsRepository.GetParkingLotByIdAsync(id);
     }
 
-    public async Task<ParkingLot> UpdateCapacity(string id, int capacity)
+    public async Task<ParkingLot> UpdateCapacityAsync(string id, int capacity)
     {
-        return await _parkingLotsRepository.UpdateCapacity(id, capacity);
+        return await _parkingLotsRepository.UpdateCapacityAsync(id, capacity);
     }
 }
