@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using ParkingLotApi.Dtos;
 using ParkingLotApi.Exceptions;
 using ParkingLotApi.Models;
@@ -40,6 +41,25 @@ namespace ParkingLotApi.Controllers
         public async Task<ActionResult<ParkingLot>> GetbyIdAsync(string id)
         {
             return StatusCode(StatusCodes.Status200OK, await _service.GetByIdAsync(id));
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<ParkingLot>> UpdatebyIdAsync(string id, [FromBody] JsonPatchDocument<ParkingLotDto> patchDoc)
+        {
+            if (patchDoc != null)
+            {
+                var parkingLotDto = new ParkingLotDto();
+                patchDoc.ApplyTo(parkingLotDto, ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                return StatusCode(StatusCodes.Status200OK, await _service.UpdateByIdAsync(id, parkingLotDto));
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
     }
 }

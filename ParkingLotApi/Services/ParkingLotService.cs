@@ -1,4 +1,5 @@
-﻿using ParkingLotApi.Dtos;
+﻿using Microsoft.AspNetCore.Mvc;
+using ParkingLotApi.Dtos;
 using ParkingLotApi.Exceptions;
 using ParkingLotApi.Models;
 using ParkingLotApi.Reposirities;
@@ -28,12 +29,17 @@ namespace ParkingLotApi.Services
 
         public async Task<List<ParkingLot>> GetPartialAsync(int pageSize, int pageIndex)
         {
-            return await _parkingLotRepository.GetPartial(pageSize, pageIndex);
+            return await _parkingLotRepository.GetParkingLotPartial(pageSize, pageIndex);
         }
 
         public async Task<ParkingLot> GetByIdAsync(string id)
         {
-            return await _parkingLotRepository.GetById(id);
+            return await _parkingLotRepository.GetParkingLotById(id);
+        }
+
+        public async Task<ParkingLot> UpdateByIdAsync(string id, ParkingLotDto parkingLotDto)
+        {
+            return await _parkingLotRepository.UpdateParkingLot(id, parkingLotDto.ToEntity());
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using ParkingLotApi.Dtos;
 using ParkingLotApi.Models;
 
 
@@ -23,13 +24,23 @@ namespace ParkingLotApi.Reposirities
 
         public async Task DeleteParkingLot(string id) => await _parkingLotCollection.DeleteOneAsync(a => a.Id == id);
 
-        public async Task<ParkingLot> GetById(string id) => await _parkingLotCollection.Find(a => a.Id == id).FirstOrDefaultAsync();
+        public async Task<ParkingLot> GetParkingLotById(string id) => await _parkingLotCollection.Find(a => a.Id == id).FirstOrDefaultAsync();
 
-        public async Task<List<ParkingLot>> GetPartial(int pageSize, int pageIndex)
+        public async Task<List<ParkingLot>> GetParkingLotPartial(int pageSize, int pageIndex)
         {
             var parkingLots = _parkingLotCollection.Find(_ => true).ToList();
             var pagedParkingLots = parkingLots.Skip((pageIndex) * pageSize).Take(pageSize).ToList();
             return pagedParkingLots;
+        }
+
+        public async Task<ParkingLot> UpdateParkingLot(string id, ParkingLot parkingLot)
+        {
+            var candidate = await _parkingLotCollection.Find(a => a.Id == id).FirstOrDefaultAsync();
+            if (parkingLot.Name != null)  candidate.Name = parkingLot.Name;
+            if (parkingLot.Capacity > 10) candidate.Capacity = parkingLot.Capacity;
+            if (parkingLot.Location != null) candidate.Location = parkingLot.Location;
+            await _parkingLotCollection.ReplaceOneAsync(a => a.Id == id, candidate);
+            return candidate;
         }
     }
 }
