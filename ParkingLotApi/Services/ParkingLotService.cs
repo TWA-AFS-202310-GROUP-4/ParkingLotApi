@@ -1,4 +1,5 @@
-﻿using ParkingLotApi.DTOs;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using ParkingLotApi.DTOs;
 using ParkingLotApi.Exceptions;
 using ParkingLotApi.Models;
 using ParkingLotApi.Repositories;
@@ -25,6 +26,14 @@ namespace ParkingLotApi.Services
         public async Task<bool> DeleteAsync(string id)
         {
             return await _parkingLotRepository.DeleteParkingLot(id);
+        }
+
+        public async Task<List<ParkingLot>> GetParkingLotByPageSizeAsync(int? pageIndex, int pageSize)
+        {
+
+            List<ParkingLot> parkingLots = await _parkingLotRepository.GetParkingLot();
+
+            return  parkingLots.Skip(((int)pageIndex - 1) * (int)pageSize).Take((int)pageSize).ToList();
         }
     }
 }
