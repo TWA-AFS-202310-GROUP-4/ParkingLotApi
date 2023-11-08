@@ -40,11 +40,7 @@ namespace ParkingLotApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ParkingLot>>> GetParkingLotByPage([FromQuery] int? pageIndex)
         {
-            if (pageIndex < 1 || pageIndex == null)
-            {
-                return BadRequest();
-            }
-
+          
             return StatusCode(StatusCodes.Status200OK,
                 await _parkingLotSaervice.GetParkingLotByPageSizeAsync(pageIndex, pageSize));
 

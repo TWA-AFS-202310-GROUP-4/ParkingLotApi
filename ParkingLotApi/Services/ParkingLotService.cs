@@ -30,8 +30,17 @@ namespace ParkingLotApi.Services
 
         public async Task<List<ParkingLot>> GetParkingLotByPageSizeAsync(int? pageIndex, int pageSize)
         {
-
+            if (pageIndex <= 0 || pageIndex == null)
+            {
+                throw new InvalidCapacityException();
+            }
             List<ParkingLot> parkingLots = await _parkingLotRepository.GetParkingLot();
+            int pageCount = parkingLots.Count / pageSize;
+            pageCount = parkingLots.Count % pageSize == 0?  pageCount: pageCount+=1;
+            if ( pageSize <= parkingLots.Count && pageIndex > pageCount )
+            {
+                throw new InvalidPageIndexException();
+            }
 
             return  parkingLots.Skip(((int)pageIndex - 1) * (int)pageSize).Take((int)pageSize).ToList();
         }
