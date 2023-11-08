@@ -7,5 +7,6 @@ namespace ParkingLotApi.Repository
     {
         Task<ParkingLot> AddParkingLot(ParkingLot parkingLotDTO);
         Task<bool> DeleteParkingLotAsync(string id);
+        Task<List<ParkingLot>> GetParkingLotByPageIndexAsync(int? pageIndex);
     }
 }

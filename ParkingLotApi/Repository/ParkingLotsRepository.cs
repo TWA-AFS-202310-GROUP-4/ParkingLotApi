@@ -8,7 +8,7 @@ namespace ParkingLotApi.Repository
     public class ParkingLotsRepository : IParkingLotsRepository
     {
         private readonly IMongoCollection<ParkingLot> _parkingLotCollection;
-
+        private static readonly int _pageSize = 15;
         public ParkingLotsRepository(IOptions<ParkingLotDatabaseSettings> parkingLotDatabaseSettings)
         {
             var mongoClient = new MongoClient(parkingLotDatabaseSettings.Value.ConnectionString);
@@ -27,6 +27,11 @@ namespace ParkingLotApi.Repository
         {
             var res = await _parkingLotCollection.DeleteOneAsync(parkingLot => parkingLot.Id == id);
             return res.DeletedCount == 0 ? false:true ;
+        }
+
+        public async Task<List<ParkingLot>> GetParkingLotByPageIndexAsync(int? pageIndex)
+        {
+            return await _parkingLotCollection.Find(Builders<ParkingLot>.Filter.Empty).Skip((pageIndex - 1) * _pageSize).Limit(_pageSize).ToListAsync();
         }
     }
 }

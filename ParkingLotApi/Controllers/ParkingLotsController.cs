@@ -15,6 +15,16 @@ namespace ParkingLotApi.Controllers
             this.parkingLotsService = parkingLotsService;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<List<ParkingLot>>> GetParkingLotsListAsync([FromQuery] int? pageIndex)
+        {
+            if (pageIndex == null || pageIndex < 1)
+            {
+                pageIndex = 1;
+            }
+
+            return Ok(await parkingLotsService.GetParkingLotSAsync(pageIndex));
+        }
 
         [HttpPost]
         public async Task<ActionResult<ParkingLot>> CreateNewParkingLotAsync([FromBody] ParkingLotRequest parkingLotRequest)
@@ -26,7 +36,7 @@ namespace ParkingLotApi.Controllers
         public async Task<ActionResult> DeleteExistedParkingLotAsync(string id)
         {
             var res = await parkingLotsService.DeleteParkingLotByIdAsync(id);
-            return res?NoContent():NotFound();
+            return res ? NoContent() : NotFound();
         }
 
     }
