@@ -1,29 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace ParkingLotApiTest.Controllers
 {
-    public class WeatherForecastControllerTest
+    public class WeatherForecastControllerTest : TestBase
     {
 
-        public HttpClient httpClient;
-        public WeatherForecastControllerTest()
+        private HttpClient httpClient;
+        public WeatherForecastControllerTest(WebApplicationFactory<Program> factory) : base(factory)
         {
-            WebApplicationFactory<Program> factory = new WebApplicationFactory<Program>();
-            httpClient = factory.CreateClient();
+            httpClient = GetClient();
         }
-
 
         [Fact]
         public async Task Shaould_return_Ok_when_get_WeatherForecast()
         {
-         var  responseMessage =  await httpClient.GetAsync("/WeatherForecast");
-         Assert.Equal(HttpStatusCode.OK,responseMessage.StatusCode);
+            var responseMessage = await httpClient.GetAsync("/WeatherForecast");
+            Assert.Equal(HttpStatusCode.OK, responseMessage.StatusCode);
         }
     }
 }
