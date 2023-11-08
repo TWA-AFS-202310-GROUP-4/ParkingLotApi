@@ -29,5 +29,11 @@ namespace ParkingLotApi.Controllers
             await _service.DeleteAsync(id);
             return NoContent();
         }
+
+        [HttpGet]
+        public async Task<ActionResult<List<ParkingLot>>> GetPartialAsync(int? pageSize = 10, int? pageIndex = 0)
+        {
+            return StatusCode(StatusCodes.Status200OK, await _service.GetPartialAsync((int)pageSize, (int)pageIndex));
+        }
     }
 }

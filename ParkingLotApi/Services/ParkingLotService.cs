@@ -25,5 +25,10 @@ namespace ParkingLotApi.Services
         }
 
         public async Task DeleteAsync(string id) => await _parkingLotRepository.DeleteParkingLot(id);
+
+        public async Task<List<ParkingLot>> GetPartialAsync(int pageSize, int pageIndex)
+        {
+            return await _parkingLotRepository.GetPartial(pageSize, pageIndex);
+        }
     }
 }

@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using ParkingLotApi.Models;
+
 
 namespace ParkingLotApi.Reposirities
 {
@@ -20,5 +22,12 @@ namespace ParkingLotApi.Reposirities
         }
 
         public async Task DeleteParkingLot(string id) => await _parkingLotCollection.DeleteOneAsync(a => a.Id == id);
+
+        public async Task<List<ParkingLot>> GetPartial(int pageSize, int pageIndex)
+        {
+            var parkingLots = _parkingLotCollection.Find(_ => true).ToList();
+            var pagedParkingLots = parkingLots.Skip((pageIndex) * pageSize).Take(pageSize).ToList();
+            return pagedParkingLots;
+        }
     }
 }
