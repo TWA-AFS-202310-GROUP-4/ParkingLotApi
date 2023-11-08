@@ -2,7 +2,7 @@
 using System.Net;
 using ParkingLotApi.Request;
 using System.Net.Http.Json;
-using ParkingLotApi.DTO;
+using ParkingLotApi.Models;
 
 namespace ParkingLotApiTest.ControllersTest
 {
@@ -22,7 +22,7 @@ namespace ParkingLotApiTest.ControllersTest
             HttpResponseMessage httpResponseMessage = await GetClient().PostAsJsonAsync("/ParkingLots", request);
 
             //then
-            ParkingLotDTO? parkingLot = await httpResponseMessage.Content.ReadFromJsonAsync<ParkingLotDTO>();
+            ParkingLot? parkingLot = await httpResponseMessage.Content.ReadFromJsonAsync<ParkingLot>();
             Assert.NotNull(parkingLot);
         }
 
@@ -36,7 +36,7 @@ namespace ParkingLotApiTest.ControllersTest
             HttpResponseMessage httpResponseMessage = await GetClient().PostAsJsonAsync("/ParkingLots", request);
 
             //then
-            ParkingLotDTO? parkingLot = await httpResponseMessage.Content.ReadFromJsonAsync<ParkingLotDTO>();
+            ParkingLot? parkingLot = await httpResponseMessage.Content.ReadFromJsonAsync<ParkingLot>();
             Assert.NotNull(parkingLot);
         }
 

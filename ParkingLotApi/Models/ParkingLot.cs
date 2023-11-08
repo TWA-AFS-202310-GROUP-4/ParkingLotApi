@@ -1,17 +1,22 @@
-﻿namespace ParkingLotApi.DTO
-{
-    public class ParkingLotDTO
-    {
-        ParkingLotDTO() { }
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
-        public ParkingLotDTO(string name, int capacity, string location)
+namespace ParkingLotApi.Models
+{
+    public class ParkingLot
+    {
+        ParkingLot() { }
+
+        public ParkingLot(string name, int capacity, string location)
         {
-            Id= Guid.NewGuid().ToString();
             Name = name;
             Capacity = capacity;
             Location = location;
         }
 
+
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
         public string? Name { get; set; }
         public int Capacity { get; set; } = 10;
