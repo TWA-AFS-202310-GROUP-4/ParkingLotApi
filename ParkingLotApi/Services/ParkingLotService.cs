@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using ParkingLotApi.DTOs;
 using ParkingLotApi.Exceptions;
 using ParkingLotApi.Interfaces;
@@ -66,6 +67,10 @@ namespace ParkingLotApi.Services
 
         public async Task<ParkingLotDto> GetByIdAsync(string id)
         {
+            if (!ObjectId.TryParse(id, out _))
+            {
+                throw new InvalidParkingLotNameOrIdException();
+            }
             var lot  = await _parkingLotRepository.GetByIdAsync(id);
             if (lot == null)
             {
