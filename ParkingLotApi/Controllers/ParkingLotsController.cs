@@ -11,7 +11,7 @@ namespace ParkingLotApi.Controllers
     [Route("[controller]")]
     public class ParkingLotsController : ControllerBase
     {
-        
+
         private readonly ParkingLotsService _parkingLotsService;
 
         public ParkingLotsController(ParkingLotsService parkingLotsService)
@@ -21,7 +21,7 @@ namespace ParkingLotApi.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<ParkingLot>> CreateAsync([FromBody]ParkingLotDto parkingLotDto)
+        public async Task<ActionResult<ParkingLot>> CreateAsync([FromBody] ParkingLotDto parkingLotDto)
         {
 
             return StatusCode(StatusCodes.Status201Created, await _parkingLotsService.CreateAsync(parkingLotDto));
@@ -30,9 +30,15 @@ namespace ParkingLotApi.Controllers
         [HttpGet]
         public async Task<ActionResult<ParkingLot>> GetByNameAsync(string name)
         {
-            
-
             return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAsync(string id)
+        {
+            
+            await  _parkingLotsService.DeleteAsync(id);
+            return NoContent();
         }
     }
 }

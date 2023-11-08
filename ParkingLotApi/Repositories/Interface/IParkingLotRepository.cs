@@ -1,4 +1,5 @@
-﻿using ParkingLotApi.Dtos;
+﻿using MongoDB.Bson;
+using ParkingLotApi.Dtos;
 using ParkingLotApi.Models;
 
 namespace ParkingLotApi.Repositories.Interface
@@ -7,5 +8,10 @@ namespace ParkingLotApi.Repositories.Interface
     {
 
         public Task<ParkingLot> CreateParkingLot(ParkingLot parkingLot); 
+
+        public Task<ParkingLot> GetByName(string name);
+
+        public Task DeleteById(string id);
+        public Task<ParkingLot> GetById(string id);
     }
 }
