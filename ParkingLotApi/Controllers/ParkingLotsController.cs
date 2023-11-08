@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ParkingLotApi.DTO;
+using ParkingLotApi.Models;
 using ParkingLotApi.Request;
 using ParkingLotApi.Services;
 
@@ -17,7 +17,7 @@ namespace ParkingLotApi.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<ParkingLotDTO>> CreateNewParkingLotAsync([FromBody] ParkingLotRequest parkingLotRequest)
+        public async Task<ActionResult<ParkingLot>> CreateNewParkingLotAsync([FromBody] ParkingLotRequest parkingLotRequest)
         {
             return Created("", await parkingLotsService.AddParkingLotAsyn(parkingLotRequest));
         }
