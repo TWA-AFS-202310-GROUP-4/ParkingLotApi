@@ -42,8 +42,13 @@ public class ParkingLotsController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> UpdateCapacityAsync(string id, ParkingLotsDto parkingLotsDto)
+    public async Task<ActionResult> UpdateCapacityAsync(string id, CapacityDto capacityDto)
     {
-        return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.UpdateCapacityAsync(id, parkingLotsDto.Capacity));
+        if (capacityDto.Capacity < 10)
+        {
+            return BadRequest();
+        }
+
+        return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.UpdateCapacityAsync(id, capacityDto.Capacity));
     }
 }
