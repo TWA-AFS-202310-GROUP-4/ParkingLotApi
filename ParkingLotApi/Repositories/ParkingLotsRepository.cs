@@ -32,4 +32,9 @@ public class ParkingLotsRepository : IParkingLotsRepository
             throw new ParkingLotNotFoundException();
         }
     }
+
+    public async Task<List<ParkingLot>> GetParkingLots(int pageNumber)
+    {
+        return await _parkingLotColelction.Find(_ => true).Skip((pageNumber - 1) * PageSize).Limit(PageSize).ToListAsync();
+    }
 }

@@ -28,4 +28,10 @@ public class ParkingLotsController : ControllerBase
        await _parkingLotsService.DeleteAParkingLot(id);
        return NoContent();
     }
+
+    [HttpGet]
+    public async Task<ActionResult<ParkingLotsDto>> ShowParkingLotsWithPagination([FromQuery] int pageIndex)
+    {
+        return StatusCode(StatusCodes.Status200OK, await _parkingLotsService.ShowParkingLots(pageIndex));
+    }
 }

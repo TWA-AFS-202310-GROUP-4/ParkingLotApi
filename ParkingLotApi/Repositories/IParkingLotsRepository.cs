@@ -7,4 +7,6 @@ public interface IParkingLotsRepository
     public Task<ParkingLot> CreateParkingLot(ParkingLot parkingLot);
 
     public Task DeleteParkingLot(string id);
+
+    public Task<List<ParkingLot>> GetParkingLots(int pageNumber);
 }
