@@ -41,6 +41,11 @@ namespace ParkingLotApi.Services
 
         public async Task<ParkingLot> UpdateByIdAsync(string id, ParkingLotDto parkingLotDto)
         {
+            if (id != null)
+            {
+                var checkId = await _parkingLotRepository.GetParkingLotById(id);
+                if (checkId == null) throw new InvalidIdException(); 
+            }
             if (parkingLotDto.Capacity != 0 && parkingLotDto.Capacity < 10) throw new InvalidCapacityException();
             if (parkingLotDto.Name != null)
             {
