@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingLotApi", "ParkingLotApi\ParkingLotApi.csproj", "{245411D4-F8E0-4BE6-AF4C-B4EB3AC0ABBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingLotApi", "ParkingLotApi\ParkingLotApi.csproj", "{245411D4-F8E0-4BE6-AF4C-B4EB3AC0ABBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingLotApiTest", "ParkingLotApiTest\ParkingLotApiTest.csproj", "{3C240C7A-4F4C-42B9-91A1-DE41AAB75DAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingLotApiTest", "ParkingLotApiTest\ParkingLotApiTest.csproj", "{3C240C7A-4F4C-42B9-91A1-DE41AAB75DAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
