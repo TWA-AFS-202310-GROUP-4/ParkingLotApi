@@ -11,25 +11,25 @@ namespace ParkingLotApi.Controllers
     [Route("[controller]")]
     public class ParkingLotsController : ControllerBase
     {
-        private readonly ParkingLotService _parkingLotSaervice;
+        private readonly ParkingLotService _parkingLotService;
         private const int PageSize = 15;
         public ParkingLotsController(ParkingLotService parkingLotService)
         {
-            this._parkingLotSaervice = parkingLotService;
+            this._parkingLotService = parkingLotService;
         }
 
         [HttpPost]
         public async Task<ActionResult<ParkingLotDTO>> CreateParkingLotAsync([FromBody] ParkingLotDTO parkingLotDto)
         {
 
-            return StatusCode(StatusCodes.Status201Created, await _parkingLotSaervice.AddAsync(parkingLotDto));
+            return StatusCode(StatusCodes.Status201Created, await _parkingLotService.AddAsync(parkingLotDto));
 
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteParkingLotAsync(string id)
         {
-            bool isSuccess = _parkingLotSaervice.DeleteAsync(id).Result;
+            bool isSuccess = _parkingLotService.DeleteAsync(id).Result;
             if (isSuccess)
             {
                 return NoContent();
@@ -42,15 +42,15 @@ namespace ParkingLotApi.Controllers
         {
           
             return StatusCode(StatusCodes.Status200OK,
-                await _parkingLotSaervice.GetParkingLotByPageSizeAsync(pageIndex, PageSize));
+                await _parkingLotService.GetParkingLotByPageSizeAsync(pageIndex, PageSize));
 
 
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ParkingLot>> GetParkingLotByPage(string id)
+        public async Task<ActionResult<ParkingLot>> GetParkingLotById(string id)
         {
-            var result = await _parkingLotSaervice.GetParkingLotById(id);
+            var result = await _parkingLotService.GetParkingLotById(id);
             if (result == null)
             {
                 return NotFound();
@@ -62,7 +62,7 @@ namespace ParkingLotApi.Controllers
         [HttpPatch("{id}")]
         public async Task<ActionResult<ParkingLot>> UpdateParkingLotAsync(string id, [FromBody] ParkingLotWithCapacityDTO parkingLotWithCapacity)
         {
-            var result =await _parkingLotSaervice.UpdateParkingLotById(id, parkingLotWithCapacity.Capacity);
+            var result =await _parkingLotService.UpdateParkingLotById(id, parkingLotWithCapacity.Capacity);
             if (result == null)
             {
                 return NotFound();
