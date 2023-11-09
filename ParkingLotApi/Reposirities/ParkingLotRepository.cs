@@ -30,8 +30,8 @@ namespace ParkingLotApi.Reposirities
 
         public async Task<List<ParkingLot>> GetParkingLotPartial(int pageSize, int pageIndex)
         {
-            var parkingLots = _parkingLotCollection.Find(_ => true).ToList();
-            var pagedParkingLots = parkingLots.Skip((pageIndex) * pageSize).Take(pageSize).ToList();
+            var parkingLots = _parkingLotCollection.Find(_ => true);
+            var pagedParkingLots = await parkingLots.Skip((pageIndex) * pageSize).Limit(pageSize).ToListAsync();
             return pagedParkingLots;
         }
 
