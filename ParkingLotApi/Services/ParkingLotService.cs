@@ -21,6 +21,11 @@ namespace ParkingLotApi.Services
                 throw new InvalidCapacityException();
             }
 
+            var result = await _parkingLotRepository.GetParkingLotByName(parkingLotDto.Name);
+            if (result == null)
+            {
+                throw new DuplicateNameException();
+            }
             return await _parkingLotRepository.CreateParkingLot(parkingLotDto.ToEntity());
         }
 
@@ -29,21 +34,13 @@ namespace ParkingLotApi.Services
             return await _parkingLotRepository.DeleteParkingLot(id);
         }
 
-        public async Task<List<ParkingLot>> GetParkingLotByPageSizeAsync(int? pageIndex, int pageSize)
+        public async Task<List<ParkingLot>> GetParkingLotByPageSizeAsync(int pageIndex, int pageSize)
         {
-            if (pageIndex <= 0 || pageIndex == null)
+            if (pageIndex <= 0)
             {
                 throw new InvalidPageIndexException();
             }
-            List<ParkingLot> parkingLots = await _parkingLotRepository.GetParkingLot();
-            int pageCount = parkingLots.Count / pageSize;
-            pageCount = parkingLots.Count % pageSize == 0?  pageCount: pageCount+=1;
-            if ( pageSize <= parkingLots.Count && pageIndex > pageCount )
-            {
-                throw new InvalidPageIndexException();
-            }
-
-            return  parkingLots.Skip(((int)pageIndex - 1) * (int)pageSize).Take((int)pageSize).ToList();
+            return await _parkingLotRepository.GetParkingLotByPageIndex(pageIndex, pageSize);
         }
 
         public async Task<ParkingLot> GetParkingLotById(string id)

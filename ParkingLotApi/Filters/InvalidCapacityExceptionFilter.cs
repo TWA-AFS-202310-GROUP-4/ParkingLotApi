@@ -19,6 +19,11 @@ namespace ParkingLotApi.Filters
                 context.Result = new BadRequestResult();
                 context.ExceptionHandled = true;
             }
+            else if (context.Exception is DuplicateNameException duplicateNameException)
+            {
+                context.Result = new BadRequestResult();
+                context.ExceptionHandled = true;
+            }
         }
 
         void IActionFilter.OnActionExecuting(ActionExecutingContext context)
