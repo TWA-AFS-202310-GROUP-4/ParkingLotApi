@@ -12,7 +12,7 @@ namespace ParkingLotApi.Controllers
     public class ParkingLotsController : ControllerBase
     {
         private readonly ParkingLotService _parkingLotSaervice;
-        private readonly int pageSize = 15;
+        private const int PageSize = 15;
         public ParkingLotsController(ParkingLotService parkingLotService)
         {
             this._parkingLotSaervice = parkingLotService;
@@ -42,7 +42,7 @@ namespace ParkingLotApi.Controllers
         {
           
             return StatusCode(StatusCodes.Status200OK,
-                await _parkingLotSaervice.GetParkingLotByPageSizeAsync(pageIndex, pageSize));
+                await _parkingLotSaervice.GetParkingLotByPageSizeAsync(pageIndex, PageSize));
 
 
         }
