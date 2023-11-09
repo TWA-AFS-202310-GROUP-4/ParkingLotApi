@@ -26,6 +26,8 @@ namespace ParkingLotApi.Reposirities
 
         public async Task<ParkingLot> GetParkingLotById(string id) => await _parkingLotCollection.Find(a => a.Id == id).FirstOrDefaultAsync();
 
+        public async Task<ParkingLot> GetParkingLotByName(string name) => await _parkingLotCollection.Find(a => a.Name.Equals(name)).FirstOrDefaultAsync();
+
         public async Task<List<ParkingLot>> GetParkingLotPartial(int pageSize, int pageIndex)
         {
             var parkingLots = _parkingLotCollection.Find(_ => true).ToList();

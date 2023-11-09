@@ -4,15 +4,14 @@ using ParkingLotApi.Exceptions;
 
 namespace ParkingLotApi.Filter
 {
-    public class InvalidIdExceptionFilter : IActionFilter, IOrderedFilter
+    public class InvalidNameExceptionFilter : IActionFilter, IOrderedFilter
     {
         public int Order => int.MaxValue - 10;
-
         public void OnActionExecuted(ActionExecutedContext context) // when controller method return
         {
-            if (context.Exception is InvalidIdException)
+            if (context.Exception is InvalidNameException)
             {
-                context.Result = new NotFoundResult();
+                context.Result = new BadRequestResult();
                 context.ExceptionHandled = true;
             }
         }

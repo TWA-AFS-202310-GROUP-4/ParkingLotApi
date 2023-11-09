@@ -10,5 +10,6 @@ namespace ParkingLotApi.Reposirities
         public Task<List<ParkingLot>> GetParkingLotPartial(int pageSize, int pageIndex);
         public Task<ParkingLot> GetParkingLotById(string id);
         public Task<ParkingLot> UpdateParkingLot(string id, ParkingLot parkingLot);
+        public Task<ParkingLot> GetParkingLotByName(string name);
     }
 }

@@ -17,10 +17,10 @@ namespace ParkingLotApi.Services
 
         public async Task<ParkingLot> AddAsync(ParkingLotDto data)
         {
-            if (data.Capacity < 10)
-            {
-                throw new InvalidCapacityException();
-            }
+            if (data.Capacity < 10) throw new InvalidCapacityException();
+
+            var checkName = _parkingLotRepository.GetParkingLotByName(data.Name);
+            if (checkName != null) throw new InvalidNameException();
 
             return await _parkingLotRepository.CreateParkingLot(data.ToEntity());
         }
@@ -42,6 +42,11 @@ namespace ParkingLotApi.Services
         public async Task<ParkingLot> UpdateByIdAsync(string id, ParkingLotDto parkingLotDto)
         {
             if (parkingLotDto.Capacity != 0 && parkingLotDto.Capacity < 10) throw new InvalidCapacityException();
+            if (parkingLotDto.Name != null)
+            {
+                var checkName = await _parkingLotRepository.GetParkingLotByName(parkingLotDto.Name);
+                if (checkName != null) throw new InvalidNameException();
+            }
             return await _parkingLotRepository.UpdateParkingLot(id, parkingLotDto.ToEntity());
         }
     }

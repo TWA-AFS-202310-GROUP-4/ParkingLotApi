@@ -9,10 +9,10 @@ namespace ParkingLotApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ParkingLotController : ControllerBase
+    public class ParkingLotsController : ControllerBase
     {
         private readonly ParkingLotService _service;
-        public ParkingLotController(ParkingLotService service)
+        public ParkingLotsController(ParkingLotService service)
         {
             this._service = service;
         }
@@ -32,7 +32,7 @@ namespace ParkingLotApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ParkingLot>>> GetPartialAsync(int? pageSize = 10, int? pageIndex = 0)
+        public async Task<ActionResult<List<ParkingLot>>> GetPartialAsync(int? pageSize = 15, int? pageIndex = 0)
         {
             return StatusCode(StatusCodes.Status200OK, await _service.GetPartialAsync((int)pageSize, (int)pageIndex));
         }
