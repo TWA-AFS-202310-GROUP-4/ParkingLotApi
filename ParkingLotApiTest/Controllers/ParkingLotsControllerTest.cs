@@ -20,7 +20,7 @@ namespace ParkingLotApiTest.Controllers
         public async void Should_return_400_When_post_parkinglots_given_capacity_less_10()
         {
             var client = GetClient();
-            var parkingLot = new ParkingLotDtoRequest()
+            var parkingLot = new ParkingLotRequest()
             {
                 Name = "test",
                 Capacity = 9,

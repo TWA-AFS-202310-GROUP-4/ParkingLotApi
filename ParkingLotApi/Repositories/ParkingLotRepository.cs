@@ -9,15 +9,15 @@ namespace ParkingLotApi.Repositories
 {
     public class ParkingLotRepository : IParkingLotRepository
     {
-        private readonly IMongoCollection<ParkingLotDto> collection;
+        private readonly IMongoCollection<ParkingLotEntity> collection;
 
         public ParkingLotRepository(IOptions<DatabaseSettings> dbOptions)
         {
             var client = new MongoClient(dbOptions.Value.ConnectionString);
             var mongoDB = client.GetDatabase(dbOptions.Value.DatabaseName);
-            collection = mongoDB.GetCollection<ParkingLotDto>(dbOptions.Value.CollectionName);
+            collection = mongoDB.GetCollection<ParkingLotEntity>(dbOptions.Value.CollectionName);
         }
-        public async Task<ParkingLotDto> AddOneAsync(ParkingLotDto parkingLotDto)
+        public async Task<ParkingLotEntity> AddOneAsync(ParkingLotEntity parkingLotDto)
         {
             if (parkingLotDto.Id == null || !ObjectId.TryParse(parkingLotDto.Id, out var _))
             {
@@ -28,7 +28,7 @@ namespace ParkingLotApi.Repositories
             return parkingLotDto;
         }
 
-        public async Task<ParkingLotDto> GetByIdAsync(string id)
+        public async Task<ParkingLotEntity> GetByIdAsync(string id)
         {
             if (!ObjectId.TryParse(id, out var _))
             {
@@ -39,14 +39,14 @@ namespace ParkingLotApi.Repositories
             return await item.FirstOrDefaultAsync();
         }
 
-        public async Task<ParkingLotDto> GetByNameAsync(string name)
+        public async Task<ParkingLotEntity> GetByNameAsync(string name)
         {
 
             var item = await collection.FindAsync(a => a.Name == name);
             return await item.FirstOrDefaultAsync();
         }
 
-        public async Task<List<ParkingLotDto>> GetAllAsync()
+        public async Task<List<ParkingLotEntity>> GetAllAsync()
         {
             var items = await collection.FindAsync(_ => true);
             return items.ToList();
@@ -58,7 +58,7 @@ namespace ParkingLotApi.Repositories
             return result.DeletedCount;
         }
 
-        public async Task<ParkingLotDto> UpdateByIdAsync(ParkingLotDto parkingLotDto)
+        public async Task<ParkingLotEntity> UpdateByIdAsync(ParkingLotEntity parkingLotDto)
         {
             var res = await collection.ReplaceOneAsync(u => u.Id == parkingLotDto.Id, parkingLotDto);
             if (res.MatchedCount > 0)
@@ -70,6 +70,11 @@ namespace ParkingLotApi.Repositories
             {
                 return null;
             }
+        }
+
+        public async Task<List<ParkingLotEntity>> GetByPageIndexAndPageSizeAsync(int pageIndex, int pageSize)
+        {
+            return await collection.Find(_ => true).Skip(pageSize * (pageIndex - 1)).Limit(pageSize).ToListAsync();
         }
     }
 }

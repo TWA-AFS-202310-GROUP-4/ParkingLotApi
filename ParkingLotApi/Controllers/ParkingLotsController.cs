@@ -17,16 +17,16 @@ namespace ParkingLotApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ParkingLotDto>> CreateParkingLotAsync([FromBody] ParkingLotDtoRequest parkingLotDtoRequest)
+        public async Task<ActionResult<ParkingLotEntity>> CreateParkingLotAsync([FromBody] ParkingLotRequest parkingLotDtoRequest)
         {
-            ParkingLotDto lot;
+            ParkingLotEntity lot;
             lot = await parkingLotService.CreateParkingLostAsync(parkingLotDtoRequest);
 
             return StatusCode(StatusCodes.Status201Created, lot);
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ParkingLotDto>>> GetByPageIndex([FromQuery] int pageIndex)
+        public async Task<ActionResult<List<ParkingLotEntity>>> GetByPageIndex([FromQuery] int pageIndex)
         {
             var lots = await this.parkingLotService.GetByPageIndexAsync(pageIndex);
 
@@ -34,7 +34,7 @@ namespace ParkingLotApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ParkingLotDto>> GetByIdAsync(string id)
+        public async Task<ActionResult<ParkingLotEntity>> GetByIdAsync(string id)
         {
             var lot = await this.parkingLotService.GetByIdAsync(id);
 
@@ -50,7 +50,7 @@ namespace ParkingLotApi.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<ParkingLotDto>> UpdateById(ParkingLotDto parkingLotDto)
+        public async Task<ActionResult<ParkingLotEntity>> UpdateById(ParkingLotEntity parkingLotDto)
         {
             var lot = await this.parkingLotService.UpdateByIdAsync(parkingLotDto);
 

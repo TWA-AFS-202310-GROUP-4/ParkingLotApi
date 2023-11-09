@@ -9,32 +9,34 @@ namespace ParkingLotApi.Services
     public class ParkingLotService
     {
         private IParkingLotRepository _parkingLotRepository;
-        public ParkingLotService( IParkingLotRepository parkingLotRepository)
+        private int pageSize = Constants.PageSize;
+        public ParkingLotService(IParkingLotRepository parkingLotRepository)
         {
             this._parkingLotRepository = parkingLotRepository;
         }
 
-        public async Task<ParkingLotDto> CreateParkingLostAsync(ParkingLotDtoRequest parkingLotDtoRequest)
+        public async Task<ParkingLotEntity> CreateParkingLostAsync(ParkingLotRequest parkingLotDtoRequest)
         {
             await ValidateCapacityAndName(parkingLotDtoRequest.Capacity, parkingLotDtoRequest.Name);
 
-            var parkingLot = new ParkingLotDto(parkingLotDtoRequest);
+            var parkingLot = new ParkingLotEntity(parkingLotDtoRequest);
             return await _parkingLotRepository.AddOneAsync(parkingLot);
         }
 
-        public async Task<List<ParkingLotDto>> GetAllAsync()
+        public async Task<List<ParkingLotEntity>> GetAllAsync()
         {
             return await _parkingLotRepository.GetAllAsync();
         }
 
-        public async Task<List<ParkingLotDto>> GetByPageIndexAsync(int pageIndex ,int pageSize = 15)
+        public async Task<List<ParkingLotEntity>> GetByPageIndexAsync(int pageIndex)
         {
             if (pageIndex < 1)
             {
                 throw new InvalidCapacityException();
             }
-            var res = await GetAllAsync();
-            return res.Skip((pageIndex-1) * pageSize).Take(pageSize).ToList();
+            //var res = await GetAllAsync();
+            //return res.Skip((pageIndex-1) * pageSize).Take(pageSize).ToList();
+            return await _parkingLotRepository.GetByPageIndexAndPageSizeAsync(pageIndex, pageSize);
         }
 
         public async Task DeleteByIdAsync(string id)
@@ -42,7 +44,7 @@ namespace ParkingLotApi.Services
             await _parkingLotRepository.DeleteByIdAsync(id);
         }
 
-        public async Task<ParkingLotDto> UpdateByIdAsync(ParkingLotDto parkingLotDto)
+        public async Task<ParkingLotEntity> UpdateByIdAsync(ParkingLotEntity parkingLotDto)
         {
             await ValidateCapacityAndName(parkingLotDto.Capacity, parkingLotDto.Name);
             var lot = await _parkingLotRepository.UpdateByIdAsync(parkingLotDto);
@@ -54,7 +56,7 @@ namespace ParkingLotApi.Services
             return lot;
         }
 
-        public async Task<ParkingLotDto> GetByNameAsync(string name)
+        public async Task<ParkingLotEntity> GetByNameAsync(string name)
         {
             var lot = await _parkingLotRepository.GetByNameAsync(name);
             if (lot == null)
@@ -65,13 +67,13 @@ namespace ParkingLotApi.Services
             return lot;
         }
 
-        public async Task<ParkingLotDto> GetByIdAsync(string id)
+        public async Task<ParkingLotEntity> GetByIdAsync(string id)
         {
             if (!ObjectId.TryParse(id, out _))
             {
                 throw new InvalidParkingLotNameOrIdException();
             }
-            var lot  = await _parkingLotRepository.GetByIdAsync(id);
+            var lot = await _parkingLotRepository.GetByIdAsync(id);
             if (lot == null)
             {
                 throw new IdNotExistException();

@@ -1,8 +1,8 @@
 ﻿namespace ParkingLotApi.DTOs
 {
-    public class ParkingLotDtoRequest
+    public class ParkingLotRequest
     {
-        public ParkingLotDtoRequest()
+        public ParkingLotRequest()
         {
         }
 

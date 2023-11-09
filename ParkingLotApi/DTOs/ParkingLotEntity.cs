@@ -3,13 +3,13 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace ParkingLotApi.DTOs
 {
-    public class ParkingLotDto
+    public class ParkingLotEntity
     {
-        public ParkingLotDto()
+        public ParkingLotEntity()
         {
         }
 
-        public ParkingLotDto(ParkingLotDtoRequest parkingLotDtoRequest)
+        public ParkingLotEntity(ParkingLotRequest parkingLotDtoRequest)
         {
             this.Name = parkingLotDtoRequest.Name;
             this.Capacity = parkingLotDtoRequest.Capacity;

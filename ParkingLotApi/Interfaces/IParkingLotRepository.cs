@@ -4,11 +4,12 @@ namespace ParkingLotApi.Interfaces
 {
     public interface IParkingLotRepository
     {
-        Task<ParkingLotDto> AddOneAsync(ParkingLotDto parkingLotDto);
+        Task<ParkingLotEntity> AddOneAsync(ParkingLotEntity parkingLotDto);
         Task<long> DeleteByIdAsync(string id);
-        Task<List<ParkingLotDto>> GetAllAsync();
-        Task<ParkingLotDto> GetByIdAsync(string id);
-        Task<ParkingLotDto> GetByNameAsync(string name);
-        Task<ParkingLotDto> UpdateByIdAsync(ParkingLotDto parkingLotDto);
+        Task<List<ParkingLotEntity>> GetAllAsync();
+        Task<ParkingLotEntity> GetByIdAsync(string id);
+        Task<ParkingLotEntity> GetByNameAsync(string name);
+        Task<List<ParkingLotEntity>> GetByPageIndexAndPageSizeAsync(int pageIndex, int pageSize);
+        Task<ParkingLotEntity> UpdateByIdAsync(ParkingLotEntity parkingLotDto);
     }
 }
