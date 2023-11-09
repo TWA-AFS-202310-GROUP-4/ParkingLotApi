@@ -8,6 +8,7 @@ namespace ParkingLotApi.Services
 {
     public class ParkingLotService
     {
+        private const int Capacity = 10;
         private readonly IParkingLotRepository _parkingLotRepository;
         public ParkingLotService(IParkingLotRepository parkingLotRepository)
         {
@@ -15,7 +16,7 @@ namespace ParkingLotApi.Services
         }
         public async Task<ParkingLot> AddAsync(ParkingLotDTO parkingLotDto)
         {
-            if (parkingLotDto.Capacity < 10)
+            if (parkingLotDto.Capacity < Capacity)
             {
                 throw new InvalidCapacityException();
             }
@@ -52,7 +53,7 @@ namespace ParkingLotApi.Services
 
         public async Task<ParkingLot> UpdateParkingLotById(string id, int capacity)
         {
-            if (capacity < 10)
+            if (capacity < Capacity)
             {
                 throw new InvalidCapacityException();
             }
