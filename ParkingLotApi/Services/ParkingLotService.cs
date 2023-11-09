@@ -32,7 +32,7 @@ namespace ParkingLotApi.Services
         {
             if (pageIndex <= 0 || pageIndex == null)
             {
-                throw new InvalidCapacityException();
+                throw new InvalidPageIndexException();
             }
             List<ParkingLot> parkingLots = await _parkingLotRepository.GetParkingLot();
             int pageCount = parkingLots.Count / pageSize;
